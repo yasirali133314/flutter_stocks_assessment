@@ -10,3 +10,4 @@ The api endpoint used for fetching stocks is "http://api.marketstack.com/v1/eod?
 Api key is currently of free subscription which gets expired after every 100 network calls.
 
 User can change date selection to fetch results of different dates.
+Autocomplete search added for company name. User can search via company name.

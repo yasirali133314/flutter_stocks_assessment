@@ -12,7 +12,7 @@ String companyStocksResponseToJson(CompanyStocksResponse data) =>
 class CompanyStocksResponse {
   CompanyStocksResponse(
       {Pagination? pagination,
-      List<Data>? data,
+      List<StockData>? data,
       this.success = false,
       this.message = ''}) {
     _pagination = pagination;
@@ -26,19 +26,19 @@ class CompanyStocksResponse {
     if (json['data'] != null) {
       _data = [];
       json['data'].forEach((v) {
-        _data?.add(Data.fromJson(v));
+        _data?.add(StockData.fromJson(v));
       });
     }
   }
 
   Pagination? _pagination;
-  List<Data>? _data;
+  List<StockData>? _data;
   String message = '';
   bool success = false;
 
   Pagination? get pagination => _pagination;
 
-  List<Data>? get data => _data;
+  List<StockData>? get data => _data;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -68,12 +68,12 @@ class CompanyStocksResponse {
 /// exchange : "XNAS"
 /// date : "2022-11-01T00:00:00+0000"
 
-Data dataFromJson(String str) => Data.fromJson(json.decode(str));
+StockData dataFromJson(String str) => StockData.fromJson(json.decode(str));
 
-String dataToJson(Data data) => json.encode(data.toJson());
+String dataToJson(StockData data) => json.encode(data.toJson());
 
-class Data {
-  Data({
+class StockData {
+  StockData({
     double? open,
     double? high,
     double? low,
@@ -107,7 +107,7 @@ class Data {
     _date = date;
   }
 
-  Data.fromJson(dynamic json) {
+  StockData.fromJson(dynamic json) {
     _open = json['open'];
     _high = json['high'];
     _low = json['low'];

@@ -1,7 +1,7 @@
 class BaseApi {
   String get _BASE_URL => 'http://api.marketstack.com/v1/';
 
-  String get _API_KEY => '2fb2d7aae519aac92d1adcf178998d2c';
+  String get _API_KEY => '7bd8ec083df41cd7a162a248888e7b33';
 
   String get _GET_STOCKS_URL =>
       '${_BASE_URL}eod?access_key=$_API_KEY&symbols=AAPL,MSFT,AMZN,TSLA,NVDA,GOOGL,AMD,INTC,CSCO,PYPL';

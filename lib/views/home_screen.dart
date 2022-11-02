@@ -9,6 +9,7 @@ import 'package:flutter_stocks_assessment/widgets/action_button.dart';
 import 'package:flutter_stocks_assessment/widgets/common_text_field.dart';
 import 'package:flutter_stocks_assessment/widgets/error_widget.dart';
 import 'package:flutter_stocks_assessment/widgets/labeled_text_field.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -118,31 +119,14 @@ class HomeScreen extends StatelessWidget {
               Expanded(
                 child: response.data!.isNotEmpty
                     ? Column(
-                      children: [
-                        ListView.separated(
-                            shrinkWrap: true,
-                            itemCount: response.data?.length ?? 0,
-                            separatorBuilder: (_, index) {
-                              return Container(
-                                height: .5,
-                                color: Colors.grey,
-                              );
-                            },
-                            itemBuilder: (_, int index) {
-                              return ListTile(
-                                title: Text(response.data![index].high
-                                        ?.toStringAsFixed(2) ??
-                                    ''),
-                                subtitle: Text(
-                                    response.data?[index].low?.toStringAsFixed(2) ??
-                                        ''),
-                                trailing: Text(response.data?[index].symbol ?? ''),
-                              );
-                            }),
-                      ],
-                    )
+                        children: [
+                          _getSuggestionsBox(response),
+                          _getStocksListView(response)
+                        ],
+                      )
                     : MyErrorWidget(
-                        message: 'No stocks data found in this range. Change date selection.',
+                        message:
+                            'No stocks data found in this range. Change date selection.',
                       ),
               ),
             ],
@@ -154,5 +138,69 @@ class HomeScreen extends StatelessWidget {
       }
       return MyErrorWidget();
     });
+  }
+
+  Widget _getSuggestionsBox(CompanyStocksResponse response) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(15, 15, 15, 0),
+      child: TypeAheadField(
+        textFieldConfiguration: const TextFieldConfiguration(
+            autofocus: true,
+            decoration: InputDecoration(
+                border: OutlineInputBorder(), label: Text('Search by company name'))),
+        suggestionsBoxDecoration:
+            const SuggestionsBoxDecoration(color: Colors.white),
+        noItemsFoundBuilder: (_) {
+          return const SizedBox(
+            height: 0,
+          );
+        },
+        suggestionsCallback: (pattern) {
+          if (pattern.toString().trim().isEmpty) {
+            return [];
+          }
+          List<StockData> matches = <StockData>[];
+          matches.addAll(response.data!);
+
+          matches.retainWhere((s) {
+            return s.symbol!.toLowerCase().contains(pattern.toLowerCase());
+          });
+          return matches;
+        },
+        itemBuilder: (context, data) {
+          return ListTile(
+            title: Text(data.high?.toStringAsFixed(2) ?? ''),
+            subtitle: Text(data.low?.toStringAsFixed(2) ?? ''),
+            trailing: Text(data.symbol ?? ''),
+          );
+        },
+        onSuggestionSelected: (suggestion) {
+          print(suggestion);
+        },
+      ),
+    );
+  }
+
+  Widget _getStocksListView(CompanyStocksResponse response) {
+    return Expanded(
+      child: ListView.separated(
+          shrinkWrap: true,
+          itemCount: response.data?.length ?? 0,
+          padding: const EdgeInsets.only(top: 15),
+          separatorBuilder: (_, index) {
+            return Container(
+              height: .5,
+              color: Colors.grey,
+            );
+          },
+          itemBuilder: (_, int index) {
+            return ListTile(
+              title: Text(response.data![index].high?.toStringAsFixed(2) ?? ''),
+              subtitle:
+                  Text(response.data?[index].low?.toStringAsFixed(2) ?? ''),
+              trailing: Text(response.data?[index].symbol ?? ''),
+            );
+          }),
+    );
   }
 }

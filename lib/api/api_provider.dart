@@ -21,7 +21,7 @@ class ApiProvider {
       }
       return parsedResponse;
     } on SocketException {
-      return ApiException(message: 'No internet');
+      return ApiException(message: 'Internet is not available');
     } catch (e) {
       if (kDebugMode) {
         print(e);

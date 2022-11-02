@@ -4,7 +4,7 @@ class BaseApi {
   String get _API_KEY => '2fb2d7aae519aac92d1adcf178998d2c';
 
   String get _GET_STOCKS_URL =>
-      '${_BASE_URL}eod?access_key=$_API_KEY&symbols=AAPL&limit=10';
+      '${_BASE_URL}eod?access_key=$_API_KEY&symbols=AAPL,MSFT,AMZN,TSLA,NVDA,GOOGL,AMD,INTC,CSCO,PYPL';
 
   String getStocksUrl({String? dateFrom, String? dateTo}) {
     var url = _GET_STOCKS_URL;

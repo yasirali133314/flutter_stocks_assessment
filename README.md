@@ -4,13 +4,9 @@ A new Flutter project.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
+Stocks api is being used for fetching stocks of 10 random companies (Apple, Microsoft, Google, Amazon, Tesla, Nvidia, Cisco, Paypal, AMD, Intel).
+The api endpoint used foe fetching stocks is "http://api.marketstack.com/v1/eod?access_key=$_API_KEY&symbols=AAPL,MSFT,AMZN,TSLA,NVDA,GOOGL,AMD,INTC,CSCO,PYPL"
+Api key is currently of free subscription which gets expired after every 100 network calls.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.

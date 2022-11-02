@@ -119,7 +119,6 @@ class HomeScreen extends StatelessWidget {
                 child: response.data!.isNotEmpty
                     ? Column(
                       children: [
-
                         ListView.separated(
                             shrinkWrap: true,
                             itemCount: response.data?.length ?? 0,
